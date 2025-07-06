@@ -1,0 +1,43 @@
+﻿@model BlogCore.Models.ViewModels.HomeVM
+
+<!-- Abre sliders>-->
+
+<div id="sliderImagenes" class="carousel slide">
+
+    <div class="carousel-inner">
+        @* <div class="carousel-item active">
+            <img src="~/imagenes/sliders/Rd_E-x10.webp" class="d-block w-100" alt="...">
+        </div> *@
+
+
+        @{
+            int contador = 0;
+
+        }
+
+        @foreach(var slider in Model.Sliders)
+        {
+            var itemDinamico = contador++ == 0 ? "active" : "";
+
+            @if(slider.Estado == true)
+            {
+                <div class="carousel-item @itemDinamico">
+                    <img src="@Url.Content(slider.UrlImagen)" class="d-block w-100" alt="...">
+                    <h1 class="text-white text-center bg-dark py-1">@Html.Raw(slider.Nombre)</h1>
+
+                </div> 
+            }
+        }
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#sliderImagenes" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#sliderImagenes" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- cierra sliders>-->

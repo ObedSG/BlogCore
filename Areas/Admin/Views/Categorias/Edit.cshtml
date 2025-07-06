@@ -1,0 +1,71 @@
+﻿    @model BlogCore.Models.Categoria //porque esta vinculado a los campos del modelo categoria
+
+@{
+    ViewData["title"] = "Editar Categoria"; //para la pestaña del navegador
+}
+
+<br />
+<br />
+
+<h3 class="text-center"> Editar  categoria</h3>
+
+<form method="post" asp-action="Edit">
+
+    <div class="row px-2 offset-1 border">
+        @* mostrar mensajes de error de validación que se encuentran en el ModelState,
+            pero solo los errores que no están asociados a campos específicos del modelo. y con text-danger
+            mostramo mensaje de error con color rojo*@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-10 offset-1 mt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Nombre"> </label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Nombre" class="form-control" placeholder=" Ingresa el nombre" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <br />
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Orden"> </label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Orden" class="form-control" placeholder="" />
+                    <span asp-validation-for="Orden" class="text-danger"></span>
+                </div>
+
+            </div>
+            <br />
+
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary form-control"> Editar Categoria </button>
+                </div>
+
+                &nbsp; @* Crea espacio horizontal *@
+
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-success form-control"> Volver atras </a>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</form>
+
+@* @section Scripts{ *@
+@*     @{ *@
+@*        <partial name="_ValidationScriptsPartial" /> *@
+@*     } *@
+@* } *@
