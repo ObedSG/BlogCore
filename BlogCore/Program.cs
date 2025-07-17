@@ -2,6 +2,7 @@ using BlogCore.AccesoDatos.Data;
 using BlogCore.AccesoDatos.Data.Repository;
 using BlogCore.AccesoDatos.Data.Repository.IRepository;
 using BlogCore.Data;
+using BlogCore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +14,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) // por ahora lo cambiamos a false
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false) // por ahora lo cambiamos a false
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI();
+
+
 builder.Services.AddControllersWithViews();
 
 //Agregar contenedor de trabajo al contenedor IoC de inyeccion de dependencias
@@ -42,14 +46,10 @@ app.MapControllerRoute(
     pattern: "{area=cliente}/{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.Run();app.MapControllerRoute(
-    name: "default",
-    pattern: "{area=cliente}/{controller=Home}/{action=Index}/{id?}");
-
-// Documentación de enrutamiento (posición correcta):
+// Documentación de enrutamiento:
 // - Sistema de áreas: Organiza controladores en módulos
 // - Estructura URL: /Área/Controlador/Acción/ID
 // - Parámetros opcionales: {id?} (el '?' indica opcional)
 // - Integración con: Razor Pages para vistas dinámicas
 
-app.MapRazorPages();
+app.Run();

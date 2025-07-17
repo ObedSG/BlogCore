@@ -28,6 +28,8 @@ namespace BlogCore.AccesoDatos.Data.Repository
             _db = db;
             Categoria = new CategoriaRepository(_db);  //Inicialización del repositorio de categorías
             Articulo = new ArticuloRepository(_db);
+            Slider = new SliderRepository(_db);
+            Usuario = new UsuarioRepository(_db);
         }
 
         /// <summary>
@@ -35,6 +37,10 @@ namespace BlogCore.AccesoDatos.Data.Repository
         /// </summary>
         public ICategoriaRepository Categoria { get; private set; }
         public IArticuloRepository Articulo { get; private set; }
+
+        public ISliderRepository Slider { get; private set; }
+
+        public IUsuarioRepository Usuario { get; private set; }
 
         /// <summary>
         /// Libera los recursos utilizados por el contexto de base de datos
