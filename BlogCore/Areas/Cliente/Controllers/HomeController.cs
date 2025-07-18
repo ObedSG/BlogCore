@@ -1,6 +1,7 @@
 using BlogCore.AccesoDatos.Data.Repository.IRepository;
 using BlogCore.Models;
 using BlogCore.Models.ViewModels;
+using Microsoft.AspNetCore.JsonPatch.Internal;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -28,6 +29,34 @@ namespace BlogCore.Areas.Cliente.Controllers
             ViewBag.IsHome = true; // Para indicar que estamos en la pagina de inicio
 
             return View(homeVm);
+        }
+
+        //para buscador
+        public IActionResult ResultadoBusqueda(string searchString, int page =1,int pageSize=6)
+        {
+            var articulos = _contenedorTrabajo.Articulo.AsQueryable();
+
+            //Filtar por titulo si hay un termino de búsqueda
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                articulos = articulos.Where(e => e.Nombre.Contains(searchString) || e.Descripcion.Contains(searchString));
+
+            }
+
+            //paginar los resultados
+
+            var paginatedEntries= articulos
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
+            //crear el modelo de vista
+            var model = new ListaPaginada<Articulo>(paginatedEntries.ToList(),
+                articulos.Count(),
+                page,
+                pageSize,
+                searchString);
+            return View(model);
+            
         }
 
         [HttpGet]
