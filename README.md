@@ -1,2 +1,3 @@
-# BlogCore
-hola  dsd sdsdsdsdsdsdsd    
+Blog core
+
+Blog de pianos, realizado con Asp.net.core 
