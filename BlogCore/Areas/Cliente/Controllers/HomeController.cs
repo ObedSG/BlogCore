@@ -4,6 +4,7 @@ using BlogCore.Models.ViewModels;
 using Microsoft.AspNetCore.JsonPatch.Internal;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Drawing.Printing;
 
 namespace BlogCore.Areas.Cliente.Controllers
 {
@@ -12,18 +13,52 @@ namespace BlogCore.Areas.Cliente.Controllers
     {
         //private readonly ILogger<HomeController> _logger;
         private readonly IContenedorTrabajo _contenedorTrabajo;
+
+        public double PageSize { get; private set; }
+
         public HomeController(IContenedorTrabajo contenedorTrabajo)
         {
             _contenedorTrabajo = contenedorTrabajo;
         }
 
 
-        public IActionResult Index()
+        //Primer version sin paginación
+        //public IActionResult Index()
+        //{
+        //    HomeVM homeVm = new HomeVM()
+        //    {
+        //        Sliders = _contenedorTrabajo.Slider.GetAll(),
+        //        ListaArticulos = _contenedorTrabajo.Articulo.GetAll()
+        //    };
+
+        //    ViewBag.IsHome = true; // Para indicar que estamos en la pagina de inicio
+
+        //    return View(homeVm);
+        //}
+
+        //Segunda version con paginación
+
+        public IActionResult Index(int page = 1, int pageSize = 6)
         {
+
+            var articulos = _contenedorTrabajo.Articulo.AsQueryable();
+
+
+            //paginar los resultados
+
+            var paginatedEntries = articulos
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
+
             HomeVM homeVm = new HomeVM()
             {
                 Sliders = _contenedorTrabajo.Slider.GetAll(),
-                ListaArticulos = _contenedorTrabajo.Articulo.GetAll()
+                ListaArticulos = paginatedEntries.ToList(),
+                PageIndex = page,
+                TotalPages = (int)Math.Ceiling(articulos.Count() / (double)pageSize)
+
+
             };
 
             ViewBag.IsHome = true; // Para indicar que estamos en la pagina de inicio
@@ -31,8 +66,9 @@ namespace BlogCore.Areas.Cliente.Controllers
             return View(homeVm);
         }
 
+
         //para buscador
-        public IActionResult ResultadoBusqueda(string searchString, int page =1,int pageSize=6)
+        public IActionResult ResultadoBusqueda(string searchString, int page =1,int pageSize=3)
         {
             var articulos = _contenedorTrabajo.Articulo.AsQueryable();
 

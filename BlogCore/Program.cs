@@ -1,4 +1,5 @@
 using BlogCore.AccesoDatos.Data;
+using BlogCore.AccesoDatos.Data.Inicializado;
 using BlogCore.AccesoDatos.Data.Repository;
 using BlogCore.AccesoDatos.Data.Repository.IRepository;
 using BlogCore.Data;
@@ -24,6 +25,9 @@ builder.Services.AddControllersWithViews();
 //Agregar contenedor de trabajo al contenedor IoC de inyeccion de dependencias
 builder.Services.AddScoped<IContenedorTrabajo, ContenedorTrabajo>();
 
+//Siembra de datos
+builder.Services.AddScoped<IInicializadorBD, InicializadorBD>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,6 +40,9 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
+
+//metodo que ejecuta la siembra de datos
+siembraDatos();
 
 app.UseRouting();
 
@@ -53,3 +60,14 @@ app.MapRazorPages();
 // - Integración con: Razor Pages para vistas dinámicas
 
 app.Run();
+
+//Funcionalidad metodo siembraDatos
+
+void siembraDatos()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var inicializadorBD = scope.ServiceProvider.GetRequiredService<IInicializadorBD>();
+        inicializadorBD.Inicializar();
+    }
+}

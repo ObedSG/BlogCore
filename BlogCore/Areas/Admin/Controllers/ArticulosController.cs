@@ -37,7 +37,7 @@ namespace BlogCore.Areas.Admin.Controllers
                     Descripcion = "", // opcional
                     CategoriaId = 0, // aún no seleccionado
                     UrlImagen = "", // inicializado para evitar error en ModelState
-                    FechaCreacion = DateTime.Now.ToString() // si es requerido
+                    FechaCreacion = DateTime.Now // si es requerido
                 },
                 ListaCategorias = _contenedorTrabajo.Categoria.GetListaCategorias()
             };
@@ -51,14 +51,6 @@ namespace BlogCore.Areas.Admin.Controllers
             [ValidateAntiForgeryToken]
             public IActionResult Create(ArticuloVM artiVM)
             {
-                // 1. Ver valores que llegaron antes del ModelState.IsValid
-                Console.WriteLine("---- Valores recibidos ----");
-                Console.WriteLine($"Nombre: {artiVM.Articulo.Nombre}");
-                Console.WriteLine($"Descripcion: {artiVM.Articulo.Descripcion}");
-                Console.WriteLine($"CategoriaId: {artiVM.Articulo.CategoriaId}");
-                Console.WriteLine($"UrlImagen: {artiVM.Articulo.UrlImagen ?? "null"}");
-                Console.WriteLine($"FechaCreacion: {artiVM.Articulo.FechaCreacion ?? "null"}");
-                Console.WriteLine($"ListaCategorias: {(artiVM.ListaCategorias == null ? "null" : artiVM.ListaCategorias.Count().ToString())}");
             var archivos = HttpContext.Request.Form.Files;
 
 
@@ -87,7 +79,7 @@ namespace BlogCore.Areas.Admin.Controllers
                     }
 
                     artiVM.Articulo.UrlImagen = @"\imagenes\articulos\" + nombreArchivo + extension;
-                    artiVM.Articulo.FechaCreacion = DateTime.Now.ToString();
+                    artiVM.Articulo.FechaCreacion = DateTime.Now;
 
                     _contenedorTrabajo.Articulo.Add(artiVM.Articulo);
                     _contenedorTrabajo.Save();
@@ -173,7 +165,7 @@ namespace BlogCore.Areas.Admin.Controllers
                     }
 
                     artiVM.Articulo.UrlImagen = @"\imagenes\articulos\" + nombreArchivo + extension;
-                    artiVM.Articulo.FechaCreacion = DateTime.Now.ToString();
+                    artiVM.Articulo.FechaCreacion = DateTime.Now;
 
                     _contenedorTrabajo.Articulo.Update(artiVM.Articulo);
                     _contenedorTrabajo.Save();

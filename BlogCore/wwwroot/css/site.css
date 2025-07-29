@@ -16,11 +16,50 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+/*
 body {
   margin-bottom: 60px;
 }
-
-::placeholder{
+*/
+.busqueda ::placeholder{
     color : #dbdbdb
+}
+
+/*estilos para el nadvar*/
+.navbar{
+    padding: 17px 0;
+}
+
+.busqueda input-group-append{
+    display: flex;
+    align-items:center;
+}
+
+.busqueda .btn-secondary {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.banner-container {
+    position: relative;
+    height: 65vh;
+    overflow: hidden;
+    background: url('../imagenes/banner_p.webp') center no-repeat;
+    background-size: cover;
+}
+
+.banner-content {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    margin-bottom: 160px;  //ajustar si es necesario
+
+}
+
+.suscribe-btn {
+    padding: 15px 30px;
+    font-size: 32px;
+    border-radius: 14px;
 }

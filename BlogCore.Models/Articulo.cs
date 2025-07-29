@@ -22,8 +22,9 @@ namespace BlogCore.Models
         public string Descripcion { get; set; }
 
         [Display(Name = "Fecha de Creación")]
+        [DataType(DataType.Date)]
         [ValidateNever]
-        public string FechaCreacion { get; set; }
+        public DateTime FechaCreacion { get; set; }
 
         [DataType(DataType.ImageUrl)]
         [Display(Name = "Imagen")]

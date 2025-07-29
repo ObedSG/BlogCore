@@ -14,5 +14,8 @@ namespace BlogCore.Models.ViewModels
 
         [ValidateNever]
         public IEnumerable<SelectListItem> ListaCategorias { get; set; }
+
+
+      
     }
 }
